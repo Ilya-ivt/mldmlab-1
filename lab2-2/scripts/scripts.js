@@ -1,4 +1,4 @@
-let errorMessage = "";
+var errormessage = "";
 // Умножение бинарных матриц
 function umnMatrix(A, B)
 {
@@ -17,69 +17,73 @@ function umnMatrix(A, B)
     }     
     return C;
 }
-// Функция проверки коректности ввода
+
+//функция проверки корректности ввода
 function Validate(arr) {
-    errorMessage = "";
-    if (arr.length != 4) {
-        errorMessage = "Матрица должна содержать 4 строки!";
-    }
-    for(let i = 0; i < arr.length; i++) {
-        if(arr[i].length != 4) {
-            errorMessage = "Матрица должна содержать 4 столбца!";
-        }
-        for(let j = 0; j < arr[i].length; j++) {
-            if (arr[i][j] != '1' && arr[i][j] != '0') {
-                errorMessage = "Введенная матрица должна состоять из 0 и 1!";
+    let valid = true;
+    if (arr.length > 0) {
+        let bool = arr.split('\n');
+
+        // проверка на валидацию
+
+        for(let i = 0; i < bool.length; i++) {
+            for(let j = 0; j < bool.length; j++) {
+
+                if (bool[i][j] != 1 && bool[i][j] != 0) {
+                    errormessage = "В матрице могут быть только 0 и 1!";
+                    valid = false;
+                    break;
+                }
+                if (bool.length != 4 || bool[i].length != 4) {
+                    errormessage = "Матрица должна содержать 4 строки и 4 столбца!";
+                    valid = false;
+                    break;
+                }
             }
         }
+    } else {
+        errormessage = "Поле не должно быть пустым!"
+        valid = false;
     }
-    if (arr[0][0] == "") {
-        errorMessage = "Массив не должен быть пустым!";
-    }
-    if (errorMessage) {
-        return false;
-    }else {
-        return true;
-    }
+    return valid;
 }
 
 function GetData() {
     // Логические переменные для хранения информации о свойствах
+    let matrixArray = document.getElementById('enter');
     let refl = true;
     let Sym = true;
     let antSym = true;
     let tranz = true;
-    let matrixArray = document.querySelector(".enter").value.split("\n");
-    for (let i = 0; i < matrixArray.length; i++) {                     // Считываем двумерный массив, удаляя лишние пробелы
-        matrixArray[i] = matrixArray[i].replace(/ +/g, ' ').trim();
-        matrixArray[i] = matrixArray[i].split(" ");
-    }
-    if (Validate(matrixArray)) {
-        let tempMatrix = umnMatrix(matrixArray, matrixArray);
+
+
+    if (Validate(matrixArray.value)) {
+        let map = matrixArray.value.split('\n');
+        let tempMatrix = umnMatrix(map, map);
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
 
-                if (i!=j) {
-                    if (matrixArray[i][j] == matrixArray[j][i]) {
+                if (i != j) {
+                    if (map[i][j] == map[j][i]) {
                         antSym = false;
                     }
                 }
                 if (i == j) {
-                    if (matrixArray[i][j] == 0) {
+                    if (map[i][j] == 0) {
                         refl = false;
                     }
                 } else {
-                    if (matrixArray[i][j] != matrixArray[j][i]) {
+                    if (map[i][j] != map[j][i]) {
                         Sym = false;
                     }
                 }
-                if (matrixArray[i][j] == 0 && tempMatrix[i][j] == 1) {
+                if (map[i][j] == 0 && tempMatrix[i][j] == 1) {
                     tranz = false;
                 }
             }
         }
         // Вывод данных в HTML файл
-        if (refl==true) {
+        if (refl == true) {
             document.getElementById('refl').innerHTML = "Данная матрица рефлексивна";
         } else {
             document.getElementById('refl').innerHTML = "Данная матрица не рефлексивна";
@@ -101,6 +105,7 @@ function GetData() {
         }
         //Вывод сообщения об ошибке
     } else {
-        alert(errorMessage);
+        alert(errormessage);
     }
+
 }

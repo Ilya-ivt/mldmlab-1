@@ -11,9 +11,28 @@
 <div class="content">
     <h1 class="lab">Лабораторная работа №2</h1>
     <form method="" action="" class="form" onsubmit="return false;">
-        <textarea class="enter" placeholder="Введите матрицу 4х4 (с пробелами между элементами)" form="form "name="enter"></textarea>
+        <textarea class="enter" id="enter" placeholder="Введите матрицу 4х4 (без пробелов между элементами)" form="form" name="enter"></textarea>
         <input type="button" value="Сделать рассчёт" onclick="GetData();">
     </form>
+</div>
+
+<din class="primer">
+    <p><h3>Примел ввода матрицы:</h3></p>
+    <p>
+       Пример 1:<br>
+        1001 <br>
+        0110 <br>
+        0110 <br>
+        1001
+   </p>
+    <p>
+       Пример 2:<br>
+        0000<br>
+        1000<br>
+        1100<br>
+        1110
+    </p>
+</din>
     <h2 class="by">Результаты:</h2>
     <div class="results">
         <span id="refl"></span> <br>
